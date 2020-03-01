@@ -4,16 +4,16 @@ const bcrypt = require("bcrypt")
 const mySqlConnection = require("../db/db")
 let user
 
+router.get("/", (req, res) => {
+    if(!req.session.user) {
+        res.status(200).sendFile(__dirname + '/login.html')
+    } else res.status.send("Already LOgged In")
+});
+
 router.get("/register", (req, res) => {
     if (!req.session.user) {
         res.status(200).send('register form will be here')
     } else res.status(401).send("Not possible as you are logged in already")
-})
-
-router.get("/login", (req, res) => {
-    if (!req.session.user)
-        res.status(200).send("login page here!")
-    else res.status(401).send("nope, logout")
 })
 
 router.post("/register", (req, res) => {
@@ -66,7 +66,7 @@ router.post("/login", (req, res) => {
             const result = bcrypt.compareSync(password, user.pwdHash)
             if (result) {
                 req.session.user = user
-                res.status(200).send(user)
+                res.redirect("/")
             } else {
                 res.status(400).send("pwd incorrect")
             }

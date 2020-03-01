@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => res.status(200).send('home-page'));
+var path = require('path')
+
+router.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../index.html')));
 
 router.get('/dashboard', (req, res) => {
     if( req.session.user)

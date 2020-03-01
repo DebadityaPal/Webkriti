@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
+var path = require('path')
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
@@ -11,6 +13,8 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 3600000 }
 }));
+
+app.use(express.static('public'));
 
 app.use('/', require('./routes/index.js'));
 
