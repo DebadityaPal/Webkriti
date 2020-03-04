@@ -20,6 +20,8 @@ app.use('/', require('./routes/index.js'));
 
 app.use('/users', require('./routes/users.js'));
 
+app.use('/posts', require('./routes/post.js'));
+
 app.get('*', (req, res) => {
     res.status(404).send('You did something wrong!');
 });
