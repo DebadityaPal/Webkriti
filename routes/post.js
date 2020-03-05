@@ -21,7 +21,10 @@ router.get("/", (req, res) => {
     )
 });
 
-router.post("/", (req, res) => {
+router.get("/create" , (req, res) => {
+    res.status(200).sendFile(__dirname + '/createPost.html');
+});
+router.post("/create", (req, res) => {
     const {title, body} = req.body
     let errors = []
 
