@@ -6,7 +6,8 @@ const session = require('express-session');
 var path = require('path')
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(session({
     secret: 'seCReT',
     resave: false,

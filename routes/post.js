@@ -5,6 +5,7 @@ var path = require('path')
 let post
 
 router.get("/", (req, res) => {
+    console.log(req.body)
     let errors = []
     mySqlConnection.query(
         "SELECT * from posts",
@@ -16,6 +17,26 @@ router.get("/", (req, res) => {
                 res.send(errors)
             } else {
             res.status(200).render(path.join(__dirname, '../index.ejs'), {posts: rows})
+            }
+        }
+    )
+});
+
+router.post("/view", (req, res) => {
+    const { id } = req.body
+    console.log(req.body)
+    let errors = []
+    mySqlConnection.query(
+        "SELECT * from posts where id = ?",
+        [id],
+        (err, rows) => {
+            if (err) res.status(500).send(err)
+            if (!rows.length) errors.push({msg: "Something went wrong!"}) 
+            if (errors.length > 0) {
+                res.statusCode = 400
+                res.send(errors)
+            } else {
+            res.status(200).render(path.join(__dirname, './post.ejs'), {posts: rows})
             }
         }
     )
@@ -55,6 +76,25 @@ router.post("/create", (req, res) => {
                 res.status(200).send("successfully posted")
             }
         },
+    )
+});
+
+router.post("/edit", (req,res) => {
+    const {id} = req.body
+    let errors = []
+    mySqlConnection.query(
+        "SELECT * from posts where id = ?",
+        [id],
+        (err, rows) => {
+            if (err) res.status(500).send(err)
+            if (!rows.length) errors.push({msg: "Something went wrong!"}) 
+            if (errors.length > 0) {
+                res.statusCode = 400
+                res.send(errors)
+            } else {
+                res.status(200).render(path.join(__dirname, './editPost.ejs'), {posts: rows})
+            }
+        }
     )
 });
 
