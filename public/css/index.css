@@ -21,10 +21,15 @@ body {
   font-family: Arial;
   background: #f1f1f1;
   margin: 0px;
+  background-image: url("/images/adi.jpg");
+  min-height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 .workspace {
   font-family: Arial;
-  background: #f1f1f1;
   margin: 30px;
 }
 
@@ -34,6 +39,7 @@ body {
   font-size: 40px;
   text-align: center;
   background: white;
+  border-radius: 20px;
 }
 
 /* Create two unequal columns that floats next to each other */
@@ -62,6 +68,7 @@ body {
    background-color: white;
    padding: 20px;
    margin-top: 20px;
+   border-radius: 10px;
 }
 
 /* Clear floats after the columns */
@@ -88,6 +95,7 @@ form input[type="submit"] {
   cursor: pointer;
   font-weight: bold;
   color: #ffffff;
+  border-radius: 10px;
 }
 
 .topnav {

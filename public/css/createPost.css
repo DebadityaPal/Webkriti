@@ -19,22 +19,31 @@
 /* Add a gray background color with some padding */
 body {
     font-family: Arial;
-    padding: 20px;
     background: #f1f1f1;
     margin: 0px;
     padding: 0px;
     padding-bottom: 50px;
+    background-image: url("/images/adi.jpg");
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
 .login-form {
     width: 600px;
     margin: 0 auto;
     font-family: Tahoma, Geneva, sans-serif;
+    padding: 20px;
+    background-color: rgba(0, 0, 0 , 0.4);
+    margin-top: 20px;
+    border-radius: 10px;
 }
 .login-form h1 {
     text-align: center;
-    color: #4d4d4d;
+    color: #f3f3f3;
     font-size: 24px;
-    padding: 20px 0 20px 0;
+    padding: 0px 0 20px 0;
 }
 .login-form input[name="title"] {
     width: 100%;
@@ -42,6 +51,7 @@ body {
     border: 1px solid #dddddd;
     margin-bottom: 15px;
     box-sizing:border-box;
+    border-radius: 10px;
 }
 .login-form textarea {
     width: 100%;
@@ -52,6 +62,7 @@ body {
     resize: none;
     font-family: Arial;
     box-sizing:border-box;
+    border-radius: 10px;
 }
 .login-form input[type="submit"] {
     width: 100%;
@@ -62,6 +73,7 @@ body {
     cursor: pointer;
     font-weight: bold;
     color: #ffffff;
+    border-radius: 10px;
 }
 
 .topnav {
