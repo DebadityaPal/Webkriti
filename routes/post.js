@@ -3,9 +3,13 @@ const router = express.Router()
 const mySqlConnection = require("../db/db")
 var path = require('path')
 let post
+let user
 
 router.get("/", (req, res) => {
-    console.log(req.body)
+    var name = ''
+    if(req.session.user) {
+        name = req.session.user.name
+    }
     let errors = []
     mySqlConnection.query(
         "SELECT * from posts",
@@ -16,15 +20,15 @@ router.get("/", (req, res) => {
                 res.statusCode = 400
                 res.send(errors)
             } else {
-            res.status(200).render(path.join(__dirname, '../index.ejs'), {posts: rows})
+                res.status(200).render(path.join(__dirname, '../index.ejs'), {posts: rows, user: name})
             }
         }
     )
 });
 
-router.post("/view", (req, res) => {
-    const { id } = req.body
-    console.log(req.body)
+router.get("/view", (req, res) => {
+    const { id } = req.query
+    console.log(req.query)
     let errors = []
     mySqlConnection.query(
         "SELECT * from posts where id = ?",
@@ -79,8 +83,8 @@ router.post("/create", (req, res) => {
     )
 });
 
-router.post("/edit", (req,res) => {
-    const {id} = req.body
+router.get("/edit", (req,res) => {
+    const {id} = req.query
     let errors = []
     mySqlConnection.query(
         "SELECT * from posts where id = ?",
@@ -97,5 +101,38 @@ router.post("/edit", (req,res) => {
         }
     )
 });
+
+router.post("/edit", (req, res) => {
+   const { id, title, body } = req.body
+   console.log(req.body)
+   let errors = []
+   mySqlConnection.query(
+       "UPDATE posts SET title = ?, body = ? WHERE id = ?",
+       [title, body, id],
+       (err, rows) => {
+           if(err) res.status(500).send(err)
+           else res.status(200).redirect("/posts")
+       }
+   ) 
+});
+
+// router.put("/edit", (req, res) => {
+//     const { id, title, body } = req.query
+//     console.log(title)
+//     let errors = []
+//     mySqlConnection.query(
+//         "UPDATE posts SET title = ?, body = ? WHERE id = ?",
+//         [title, body, id],
+//         (err, rows) => {
+//             if (err) res.status(500).send(err) 
+//             if (errors.length > 0) {
+//                 res.statusCode = 400
+//                 res.send(errors)
+//             } else {
+//                 res.redirect("/posts")
+//             }
+//         }
+//     )
+// });
 
 module.exports = router

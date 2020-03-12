@@ -20,6 +20,8 @@
 .login-form input[type="submit"] {
     width: 100%;
     padding: 15px;
+    margin-top: 2px;
+    margin-bottom: 2px;
     background-color: #535b63;
     border: 0;
     box-sizing: border-box;

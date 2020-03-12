@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 
 router.get("/register", (req, res) => {
     if (!req.session.user) {
-        res.status(200).send('register form will be here')
+        res.status(200).sendFile(__dirname + '/register.html')
     } else res.status(401).send("Not possible as you are logged in already")
 })
 

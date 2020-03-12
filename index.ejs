@@ -39,14 +39,16 @@
             <h2><%= posts[i].title %></h2>
             <div class="fakeimg" style="height:200px;">Image</div>
             <p><%= posts[i].body %></p>
-            <form action="/posts/view" method="POST">
+            <form action="/posts/view" method="GET">
               <input type="hidden" id="id" name="id" value="<%= posts[i].id %>" />
-              <input type="submit">
+              <input type="submit" value="Read More">
             </form>
-            <form action="/posts/edit" method="POST">
+            <% if (posts[i].author == user) { %>
+            <form action="/posts/edit" method="GET">
               <input type="hidden" id="id" name="id" value="<%= posts[i].id %>" />
-              <input type="submit">
+              <input type="submit" value="Edit">
             </form>
+            <% } %>
           </div>
       <% } %>
         <!-- <div class="card">
