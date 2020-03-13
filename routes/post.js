@@ -35,8 +35,10 @@ const multerConfig = {
 
 router.get("/", (req, res) => {
     var id = ''
+    var name = ''
     if(req.session.user) {
         id = req.session.user.id
+        name = req.session.user.name
     }
     let errors = []
     mySqlConnection.query(
@@ -47,7 +49,7 @@ router.get("/", (req, res) => {
                 res.statusCode = 400
                 res.send(errors)
             } else {
-                res.status(200).render(path.join(__dirname, '../index.ejs'), {posts: rows, user: id})
+                res.status(200).render(path.join(__dirname, '../index.ejs'), {posts: rows, user: id, name: name})
             }
         }
     )
