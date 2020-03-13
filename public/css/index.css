@@ -57,10 +57,13 @@ body {
 }
 
 /* Fake image */
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
+img {
+  height: auto;
+  width: 90%;
+  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 /* Add a card effect for articles */

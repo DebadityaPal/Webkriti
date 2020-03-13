@@ -64,9 +64,11 @@ body {
     box-sizing:border-box;
     border-radius: 10px;
 }
-.login-form input[type="submit"] {
+.login-form input[type="submit"],
+.login-form input[type="file"]{
     width: 100%;
     padding: 15px;
+    margin: 5px;
     background-color: #535b63;
     border: 0;
     box-sizing: border-box;
