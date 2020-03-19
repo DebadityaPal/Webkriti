@@ -8,8 +8,9 @@
 	<body>
 		<div class="login-form">
 			<h1>Login Form</h1>
-			<form action="users/login" method="POST">
-				<input type="text" name="email" placeholder="Email" required>
+			<form action="users/login" method="POST" >
+				<div style="display: <%=condition%>;" class="condition">You have entered wrong credentials</div>
+				<input type="text" name="email" placeholder="Email" value="<%= email %>" required >
 				<input type="password" name="password" placeholder="Password" required>
 				<input type="submit">
 			</form>

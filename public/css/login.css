@@ -20,6 +20,13 @@ body {
     color: #f7f7f7;
     font-size: 24px;
     padding: 0px 0 20px 0;
+    margin-bottom: 0px;
+}
+.condition {
+    text-align: center;
+    color: #ff2c2c;
+    font-size: 16px;
+    padding-bottom: 10px;
 }
 .login-form input[type="password"],
 .login-form input[type="text"] {
