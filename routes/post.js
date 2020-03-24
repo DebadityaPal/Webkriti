@@ -3,10 +3,8 @@ const router = express.Router()
 const multer = require("multer")
 const mySqlConnection = require("../db/db")
 var path = require('path')
-let post
-let user
 
-//MULTER CONFIG: to get file photos to temp server storage
+
 const multerConfig = {
     storage: multer.diskStorage({
         destination: function(req, file, next){
@@ -16,16 +14,28 @@ const multerConfig = {
             console.log(file);
             const ext = file.mimetype.split('/')[1];
             next(null, req.body.title + '-' + req.session.user.id + '.'+ext);
-        }
+        },
     }),
     fileFilter: function(req, file, next){
+        console.log("CHeck", req.body)
             if(!file){
             next();
             }
         const image = file.mimetype.startsWith('image/');
         if(image){
-            console.log('photo uploaded');
-            next(null, true);
+            mySqlConnection.query(
+                "SELECT * FROM posts where author = ? AND title = ?",
+                [req.session.user.id, req.body.title],
+                (err, rows) => {
+                    if(!rows.length) {
+                        console.log('photo uploaded');
+                        next(null, true);
+                    } else {
+                        console.log("Error")
+                        return next(); 
+                    }
+                }
+            )
         }else{
             console.log("file not supported");
             return next();
@@ -42,7 +52,7 @@ router.get("/", (req, res) => {
     }
     let errors = []
     mySqlConnection.query(
-        "SELECT * from posts",
+        "SELECT * from posts order by id desc",
         (err, rows) => {
             if (err) res.status(500).send(err)
             if (errors.length > 0) {
@@ -57,7 +67,6 @@ router.get("/", (req, res) => {
 
 router.get("/view", (req, res) => {
     const { id } = req.query
-    console.log(req.query)
     let errors = []
     mySqlConnection.query(
         "SELECT * from posts where id = ?",
@@ -80,7 +89,7 @@ router.get("/create" , (req, res) => {
 });
 router.post("/create", multer(multerConfig).single('photo'), (req, res) => {
     const {title, body} = req.body
-
+    
     let date_ob = new Date();
     let date = ("0" + date_ob.getDate()).slice(-2);
     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
