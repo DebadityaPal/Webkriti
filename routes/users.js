@@ -92,16 +92,16 @@ router.post("/login", (req, res) => {
             user = rows[0]
             console.log(user)
             if (user) {
-            const result = bcrypt.compareSync(password, user.pwdHash)
-            if (result) {
-                req.session.user = user  
-                emailval = null
-                conditionval = "none"
-                res.redirect("/")
-            } else {
-                conditionval = "block"
-                res.redirect("/")
-            }
+                const result = bcrypt.compareSync(password, user.pwdHash)
+                if (result) {
+                    req.session.user = user  
+                    emailval = null
+                    conditionval = "none"
+                    res.redirect("/")
+                } else {
+                    conditionval = "block"
+                    res.redirect("/")
+                }
             } else {
                 conditionval = "block"
                 res.redirect("/")

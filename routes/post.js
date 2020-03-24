@@ -49,47 +49,57 @@ router.get("/", (req, res) => {
     if(req.session.user) {
         id = req.session.user.id
         name = req.session.user.name
-    }
-    let errors = []
-    mySqlConnection.query(
-        "SELECT * from posts order by id desc",
-        (err, rows) => {
-            if (err) res.status(500).send(err)
-            if (errors.length > 0) {
-                res.statusCode = 400
-                res.send(errors)
-            } else {
-                res.status(200).render(path.join(__dirname, '../index.ejs'), {posts: rows, user: id, name: name})
+        let errors = []
+        mySqlConnection.query(
+            "SELECT * from posts order by id desc",
+            (err, rows) => {
+                if (err) res.status(500).send(err)
+                if (errors.length > 0) {
+                    res.statusCode = 400
+                    res.send(errors)
+                } else {
+                    res.status(200).render(path.join(__dirname, '../index.ejs'), {posts: rows, user: id, name: name})
+                }
             }
-        }
-    )
+        )
+    } else {
+        res.status(401).redirect("/")
+    }
 });
 
 router.get("/view", (req, res) => {
-    const { id } = req.query
-    let errors = []
-    mySqlConnection.query(
-        "SELECT * from posts where id = ?",
-        [id],
-        (err, rows) => {
-            if (err) res.status(500).send(err)
-            if (!rows.length) errors.push({msg: "Something went wrong!"}) 
-            if (errors.length > 0) {
-                res.statusCode = 400
-                res.send(errors)
-            } else {
-            res.status(200).render(path.join(__dirname, './post.ejs'), {posts: rows})
+    if(req.session.user) {
+        const { id } = req.query
+        let errors = []
+        mySqlConnection.query(
+            "SELECT * from posts where id = ?",
+            [id],
+            (err, rows) => {
+                if (err) res.status(500).send(err)
+                if (!rows.length) errors.push({msg: "Something went wrong!"}) 
+                if (errors.length > 0) {
+                    res.statusCode = 400
+                    res.send(errors)
+                } else {
+                res.status(200).render(path.join(__dirname, './post.ejs'), {posts: rows})
+                }
             }
-        }
-    )
+        )
+    } else {
+        res.status(401).redirect("/")
+    }
 });
 
 router.get("/create" , (req, res) => {
-    res.status(200).sendFile(__dirname + '/createPost.html');
+    if(req.session.user) {
+        res.status(200).sendFile(__dirname + '/createPost.html');
+    } else {
+        res.status(401).redirect("/")
+    }
 });
 router.post("/create", multer(multerConfig).single('photo'), (req, res) => {
     const {title, body} = req.body
-    
+
     let date_ob = new Date();
     let date = ("0" + date_ob.getDate()).slice(-2);
     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
@@ -145,22 +155,26 @@ router.post("/create", multer(multerConfig).single('photo'), (req, res) => {
 });
 
 router.get("/edit", (req,res) => {
-    const {id} = req.query
-    let errors = []
-    mySqlConnection.query(
-        "SELECT * from posts where id = ?",
-        [id],
-        (err, rows) => {
-            if (err) res.status(500).send(err)
-            if (!rows.length) errors.push({msg: "Something went wrong!"}) 
-            if (errors.length > 0) {
-                res.statusCode = 400
-                res.send(errors)
-            } else {
-                res.status(200).render(path.join(__dirname, './editPost.ejs'), {posts: rows})
+    if(req.session.user) {
+        const {id} = req.query
+        let errors = []
+        mySqlConnection.query(
+            "SELECT * from posts where id = ?",
+            [id],
+            (err, rows) => {
+                if (err) res.status(500).send(err)
+                if (!rows.length) errors.push({msg: "Something went wrong!"}) 
+                if (errors.length > 0) {
+                    res.statusCode = 400
+                    res.send(errors)
+                } else {
+                    res.status(200).render(path.join(__dirname, './editPost.ejs'), {posts: rows})
+                }
             }
-        }
-    )
+        )
+    } else {
+        res.status(401).redirect("/")
+    }
 });
 
 router.post("/edit", (req, res) => {
