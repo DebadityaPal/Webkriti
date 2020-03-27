@@ -59,7 +59,7 @@ body {
 /* Fake image */
 img {
   height: auto;
-  width: 90%;
+  width: 100%;
   padding: 0px;
   margin-left: auto;
   margin-right: auto;
@@ -72,6 +72,24 @@ img {
    padding: 20px;
    margin-top: 20px;
    border-radius: 10px;
+}
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.author {
+  font-size: 20px;
+  font-weight: 600;
+}
+.date {
+  font-size: 18px;
+  font-weight: 200;
+  color: #646464;
+}
+.content{
+  font-size: 18px;
+  font-weight: 200;
 }
 
 /* Clear floats after the columns */

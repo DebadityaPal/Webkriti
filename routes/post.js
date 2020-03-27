@@ -3,7 +3,8 @@ const router = express.Router()
 const multer = require("multer")
 const mySqlConnection = require("../db/db")
 var path = require('path')
-
+let bodyval = null
+let conditionval = 'none'
 
 const multerConfig = {
     storage: multer.diskStorage({
@@ -18,9 +19,9 @@ const multerConfig = {
     }),
     fileFilter: function(req, file, next){
         console.log("CHeck", req.body)
-            if(!file){
+        if(!file){
             next();
-            }
+        }
         const image = file.mimetype.startsWith('image/');
         if(image){
             mySqlConnection.query(
@@ -71,6 +72,7 @@ router.get("/view", (req, res) => {
     if(req.session.user) {
         const { id } = req.query
         let errors = []
+        let authorname = []
         mySqlConnection.query(
             "SELECT * from posts where id = ?",
             [id],
@@ -81,7 +83,20 @@ router.get("/view", (req, res) => {
                     res.statusCode = 400
                     res.send(errors)
                 } else {
-                res.status(200).render(path.join(__dirname, './post.ejs'), {posts: rows})
+                    mySqlConnection.query(
+                        "SELECT name from users where id = ?",
+                        [rows[0].author],
+                        (er, list) => {
+                            if (er) res.status(500).send(er)
+                            if(!list.length) errors.push({msg: "Something went wrong!"})
+                            if (errors.length > 0) {
+                                res.statusCode = 400
+                                res.send(errors)
+                            } else {
+                                res.status(200).render(path.join(__dirname, './post.ejs'), {posts: rows, name: list[0].name})
+                            }
+                        }
+                    )   
                 }
             }
         )
@@ -92,14 +107,18 @@ router.get("/view", (req, res) => {
 
 router.get("/create" , (req, res) => {
     if(req.session.user) {
-        res.status(200).sendFile(__dirname + '/createPost.html');
+        res.status(200).render(path.join(__dirname, './createPost.ejs'),{body: bodyval, condition: conditionval});
+        conditionval = 'none'
+        bodyval = null
     } else {
         res.status(401).redirect("/")
     }
 });
+
 router.post("/create", multer(multerConfig).single('photo'), (req, res) => {
     const {title, body} = req.body
-
+    bodyval = null
+    conditionval = 'none'
     let date_ob = new Date();
     let date = ("0" + date_ob.getDate()).slice(-2);
     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
@@ -123,12 +142,15 @@ router.post("/create", multer(multerConfig).single('photo'), (req, res) => {
         "SELECT * FROM posts where author = ? AND title = ?",
         [req.session.user.id, title],
         (err, rows) => {
-            if(rows.length) errors.push({msg: "Same titled post by you already exists"})
+            if(rows.length) {
+                conditionval = 'block'
+                bodyval = body
+                errors.push({msg: "Another post with same title authored by you exists"})
+            }
             if (errors.length > 0) {
                 res.statusCode = 400
-                res.send(errors)
-            }
-            else {
+                res.redirect('/posts/create')
+            } else {
                 mySqlConnection.query(
                     "SELECT * FROM users where id = ?",
                     [req.session.user.id],
@@ -145,6 +167,8 @@ router.post("/create", multer(multerConfig).single('photo'), (req, res) => {
                             mySqlConnection.query(sql, [values], function(err) {
                                 if (err) res.status(500).send(err)
                             })
+                            conditionval = 'none'
+                            bodyval = null
                             res.redirect("/")
                         }
                     },
@@ -194,5 +218,17 @@ router.post("/edit", (req, res) => {
        }
    ) 
 });
+
+router.post("/delete", (req, res) => {
+    const {id} = req.body
+    mySqlConnection.query(
+        "DELETE from posts where id = ?",
+        [id],
+        (err, rows) => {
+            if(err) res.status(500).send(err)
+            else res.status(200).redirect("/posts")
+        }
+    ) 
+})
 
 module.exports = router

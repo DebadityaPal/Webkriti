@@ -35,9 +35,12 @@
     <div class="row">
       <div class="leftcolumn">
         <div class="card">
-            <h2><%= posts[0].title %></h1>
-            <div class="fakeimg" style="height:200px;">Image</div>
-            <p><%= posts[0].body %></p>
+            <img src ="/images/<%=posts[0].title%>-<%=posts[0].author%>.jpeg">
+            <div class='title'><%= posts[0].title %></div>   
+            <div class='author'>By: <%= name%></div>
+            <div class='date'>created on: <%= posts[0].createdDate %>,<%= posts[0].createdTime%></div>
+            <div class='date'>modified on: <%= posts[0].Modified %></div>
+            <p class="content"><%- posts[0].body.replace(/(?:\r\n|\r|\n)/g, '<br>') %></p>
         </div>
       </div>
       <div class="rightcolumn">

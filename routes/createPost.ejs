@@ -31,8 +31,9 @@
 		<div class="login-form">
 			<h1>Create a New Blog Post!</h1>
 			<form action="/posts/create" method="POST" enctype="multipart/form-data">
+				<div style="display: <%=condition%>;" class="condition">You already have a post with same title</div>
 				<input type="text" name="title" placeholder="Enter a Suitable Title" required>
-				<textarea name="body" placeholder="Write about something" required></textarea>
+				<textarea name="body" placeholder="Write about something" required><%= body%></textarea>
 				<input type="file" name="photo" />
 				<input type="submit">
 			</form>

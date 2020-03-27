@@ -37,9 +37,9 @@
       <div class="leftcolumn">
         <% for(let i = 0; i < posts.length; i++) { %>
           <div class="card">
-            <h2><%= posts[i].title %></h2>
-            <img src ="/images/<%=posts[i].title%>-<%=posts[i].author%>.jpeg"> 
-            <p><%= posts[i].body %></p>
+            <img src ="/images/<%=posts[i].title%>-<%=posts[i].author%>.jpeg">
+            <div class='title'><%= posts[i].title %></div>
+            <div class='date'><%= posts[i].createdDate %></div>
             <form action="/posts/view" method="GET">
               <input type="hidden" id="id" name="id" value="<%= posts[i].id %>" />
               <input type="submit" value="Read More">
@@ -50,6 +50,12 @@
               <input type="submit" value="Edit">
             </form>
             <% } %>
+            <% if (posts[i].author == user) { %>
+              <form action="/posts/delete" method="POST">
+                <input type="hidden" id="id" name="id" value="<%= posts[i].id %>" />
+                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this item?');">
+              </form>
+              <% } %>
           </div>
       <% } %>
       </div>

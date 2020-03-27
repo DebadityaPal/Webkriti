@@ -50,3 +50,6 @@ body {
     font-weight: bold;
     color: #ffffff;
 }
+.login-form input[type="submit"]:hover {
+  background-color: #4CAF50;
+}

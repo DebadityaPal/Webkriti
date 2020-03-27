@@ -77,6 +77,12 @@ body {
     color: #ffffff;
     border-radius: 10px;
 }
+.condition {
+    text-align: center;
+    color: #ff2c2c;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
 
 .topnav {
     overflow: hidden;
