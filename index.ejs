@@ -37,7 +37,7 @@
       <div class="leftcolumn">
         <% for(let i = 0; i < posts.length; i++) { %>
           <div class="card">
-            <img src ="/images/<%=posts[i].title%>-<%=posts[i].author%>.jpeg">
+            <img class="postpic" src ="/images/<%=posts[i].title%>-<%=posts[i].author%>.jpeg">
             <div class='title'><%= posts[i].title %></div>
             <div class='date'><%= posts[i].createdDate %></div>
             <form action="/posts/view" method="GET">
@@ -61,9 +61,11 @@
       </div>
       <div class="rightcolumn">
         <div class="card">
-          <h2>About Me</h2>
-          <div class="fakeimg" style="height:100px;">Image</div>
-          <p>Some text about us in culpa qui officia deserunt mollit anim..</p>
+          <h2>About the Developer</h2>
+          <div class="fakeimg" style="height:200px;">
+            <img class="devpic" src="./images/dev.jpg">
+          </div>
+          <p>Why does this section exist? <br> Because it can and I'm a narcissist.</p>
         </div>
         <div class="card">
           <h3>Popular Post</h3>
@@ -73,7 +75,11 @@
         </div>
         <div class="card">
           <h3>Follow Me</h3>
-          <p>Some text..</p>
+          <div style="height: 60px; display: flex;">
+            <a href="https://github.com/DebadityaPal" ><img class="icon" src="/images/github.png"></a>
+            <a href="https://www.kaggle.com/debadityapal" ><img class="icon" src="/images/kaggle.png"></a>
+            <a href="https://www.linkedin.com/in/debadityapal/" ><img class="icon" src="/images/linkedin.png"></a>
+          </div>
         </div>
       </div>
     </div>

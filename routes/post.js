@@ -93,7 +93,7 @@ router.get("/view", (req, res) => {
                                 res.statusCode = 400
                                 res.send(errors)
                             } else {
-                                res.status(200).render(path.join(__dirname, './post.ejs'), {posts: rows, name: list[0].name})
+                                res.status(200).render(path.join(__dirname, './post.ejs'), {posts: rows, name: list[0].name, user:req.session.user.name})
                             }
                         }
                     )   
@@ -107,7 +107,7 @@ router.get("/view", (req, res) => {
 
 router.get("/create" , (req, res) => {
     if(req.session.user) {
-        res.status(200).render(path.join(__dirname, './createPost.ejs'),{body: bodyval, condition: conditionval});
+        res.status(200).render(path.join(__dirname, './createPost.ejs'),{body: bodyval, condition: conditionval, user: req.session.user.name});
         conditionval = 'none'
         bodyval = null
     } else {
@@ -192,7 +192,7 @@ router.get("/edit", (req,res) => {
                     res.statusCode = 400
                     res.send(errors)
                 } else {
-                    res.status(200).render(path.join(__dirname, './editPost.ejs'), {posts: rows})
+                    res.status(200).render(path.join(__dirname, './editPost.ejs'), {posts: rows, user:req.session.user.name})
                 }
             }
         )

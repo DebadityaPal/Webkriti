@@ -7,6 +7,7 @@
 <body>
   
   <div class="topnav" id="myTopnav">
+    <b>Hey <%=user%></b>
     <a href="/users/logout">Logout</a>
     <a href="#contact">Contact</a>
     <a href="/posts/create">Post</a>
@@ -35,7 +36,7 @@
     <div class="row">
       <div class="leftcolumn">
         <div class="card">
-            <img src ="/images/<%=posts[0].title%>-<%=posts[0].author%>.jpeg">
+            <img class="postpic" src ="/images/<%=posts[0].title%>-<%=posts[0].author%>.jpeg">
             <div class='title'><%= posts[0].title %></div>   
             <div class='author'>By: <%= name%></div>
             <div class='date'>created on: <%= posts[0].createdDate %>,<%= posts[0].createdTime%></div>
@@ -45,9 +46,11 @@
       </div>
       <div class="rightcolumn">
         <div class="card">
-          <h2>About Me</h2>
-          <div class="fakeimg" style="height:100px;">Image</div>
-          <p>Some text about us in culpa qui officia deserunt mollit anim..</p>
+          <h2>About the Developer</h2>
+          <div class="fakeimg" style="height:200px;">
+            <img class="devpic" src="/images/dev.jpg">
+          </div>
+          <p>Why does this section exist? <br> Because it can and I'm a narcissist.</p>
         </div>
         <div class="card">
           <h3>Popular Post</h3>
