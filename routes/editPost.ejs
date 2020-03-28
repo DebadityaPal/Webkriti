@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Create a Post </title>
+		<title>Edit a Post </title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/css/createPost.css" type="text/css">
 	</head>
@@ -10,7 +10,6 @@
 		<div class="topnav" id="myTopnav">
 			<b>Hey <%=user%></b>
 			<a href="/users/logout">Logout</a>
-			<a href="#contact">Contact</a>
 			<a href="/posts/create">Post</a>
 			<a href="/" class="active">Home</a>
 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -30,7 +29,7 @@
 		  </script>
 
 		<div class="login-form">
-			<h1>Create a New Blog Post!</h1>
+			<h1>Edit your Blog Post!</h1>
 			<form action="/posts/edit" method="POST">
 				<input type="hidden" name="id" value="<%= posts[0].id %>">
 				<input type="text" name="title" value="<%= posts[0].title %>" required>

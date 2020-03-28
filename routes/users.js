@@ -51,8 +51,8 @@ router.post("/register", (req, res) => {
                 errors.push("Email already exists")
             }
             if (errors.length > 0) {
-            res.statusCode = 400
-            res.redirect("/users/register")
+                res.statusCode = 400
+                res.redirect("/users/register")
             } else {
             pwdHash = bcrypt.hashSync(password, 10)
             var sql = `INSERT INTO users (name, email, phone, pwdHash) VALUES ?`
@@ -68,12 +68,13 @@ router.post("/register", (req, res) => {
                     if (err) res.status(500).send(err)
                     user = rows[0]
                     req.session.user = user
+                    res.redirect("/posts")
+                    
                     nameval = null
                     conditionval = "none"
                     phoneval = null
                     emailval = null
                     message = ""
-                    res.redirect("/")
                 }
             )
         }

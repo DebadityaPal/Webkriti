@@ -187,7 +187,11 @@ router.get("/edit", (req,res) => {
                     res.statusCode = 400
                     res.send(errors)
                 } else {
-                    res.status(200).render(path.join(__dirname, './editPost.ejs'), {posts: rows, user:req.session.user.name})
+                    if(rows[0].author != req.session.user.id) {
+                        res.redirect("/")
+                    } else {
+                        res.status(200).render(path.join(__dirname, './editPost.ejs'), {posts: rows, user:req.session.user.name})
+                    }
                 }
             }
         )
