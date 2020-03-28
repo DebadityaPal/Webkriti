@@ -4,6 +4,14 @@
 ## PROJECT DESCRIPTION
 
 A simple CRUD application in the form of a travel blog, written in Node.js, HTML, JavaScript and MySQL.
+## Registerd Accounts:
+* Username: p.debaditya@yahoo.com
+   Password: webkriti
+* Username: something@abc.com
+   Password: secure
+* Username: test@test.com
+   Password: testing
+
 ## FEATURES
 
 * **Authentication:** All the endpoints of the blog (except the login and register endpoints) are protected well using express sessions authentication. Passwords are not directly stored in the database, only the encrypted password Hashes are stored. Thus it is not possible to extract the password via SQLi.
