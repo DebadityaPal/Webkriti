@@ -12,13 +12,11 @@ const multerConfig = {
             next(null, './public/images');
         },
         filename: function(req, file, next){
-            console.log(file);
             const ext = file.mimetype.split('/')[1];
             next(null, req.body.title + '-' + req.session.user.id + '.'+ext);
         },
     }),
     fileFilter: function(req, file, next){
-        console.log("CHeck", req.body)
         if(!file){
             next();
         }
@@ -29,16 +27,13 @@ const multerConfig = {
                 [req.session.user.id, req.body.title],
                 (err, rows) => {
                     if(!rows.length) {
-                        console.log('photo uploaded');
                         next(null, true);
                     } else {
-                        console.log("Error")
                         return next(); 
                     }
                 }
             )
         }else{
-            console.log("file not supported");
             return next();
         }
     }

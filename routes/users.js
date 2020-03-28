@@ -90,7 +90,6 @@ router.post("/login", (req, res) => {
         (err, rows) => {
             if (err) res.status(500).send(err)
             user = rows[0]
-            console.log(user)
             if (user) {
                 const result = bcrypt.compareSync(password, user.pwdHash)
                 if (result) {
