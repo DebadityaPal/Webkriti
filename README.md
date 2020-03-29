@@ -28,7 +28,8 @@ https://drive.google.com/drive/folders/1r_M60FUVqw_EdTY_MgK9ld5PDH3ZRO5a?usp=sha
 
 ## VIDEO
 
-https://drive.google.com/drive/folders/1eRi4AcKrjirRMKGuTxK2ZYKUhm6fphEs?usp=sharing
+https://www.youtube.com/watch?v=NCr-bLFFFqM
+
 
 ## HOSTED WEBSITE LINK
 
